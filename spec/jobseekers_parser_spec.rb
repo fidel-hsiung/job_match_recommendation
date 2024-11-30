@@ -4,9 +4,10 @@ require_relative '../lib/jobseekers_parser'
 
 RSpec.describe JobseekersParser do
   let(:csv_file_path) { 'spec/fixtures/jobseekers.csv' }
+  let(:jobseekers_parser) { JobseekersParser.new(csv_file_path) }
 
   describe '#results' do
-    let(:jobseekers_parser_result) { JobseekersParser.new(csv_file_path).results }
+    let(:jobseekers_parser_result) { jobseekers_parser.results }
 
     it 'returns an array of Jobseeker objects' do
       expect(jobseekers_parser_result.size).to eq(2)
