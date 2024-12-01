@@ -11,12 +11,20 @@ class JobsParser
   end
 
   def results
-    jobs = []
+    parse_jobs_from_csv
+  end
+
+  private
+
+  def parse_jobs_from_csv
+    return enum_for(:parse_jobs_from_csv) unless block_given?
 
     CSV.foreach(jobs_csv_file, headers: true) do |row|
-      jobs << Job.new(id: row['id'], title: row['title'], required_skills: row['required_skills'])
+      yield build_job(row)
     end
+  end
 
-    jobs
+  def build_job(row)
+    Job.new(id: row['id'], title: row['title'], required_skills: row['required_skills'])
   end
 end

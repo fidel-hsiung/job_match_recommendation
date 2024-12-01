@@ -9,18 +9,26 @@ class JobSkillMatchEvaluator
   end
 
   def results
-    matching_skills_count = (jobseeker.skills & job.required_skills).size
+    matching_skills_count = matching_skills.size
     required_skills_count = job.required_skills.size
 
-    matching_skills_percentage = if required_skills_count.zero?
-      0
-    else
-      ((matching_skills_count.to_f / required_skills_count) * 100).round
-    end
+    return { matching_count: 0, matching_percentage: 0 } if required_skills_count.zero?
+
+    matching_percentage = calculate_matching_percentage(matching_skills_count, required_skills_count)
 
     {
       matching_count: matching_skills_count,
-      matching_percentage: matching_skills_percentage
+      matching_percentage: matching_percentage
     }
+  end
+
+  private
+
+  def matching_skills
+    jobseeker.skills & job.required_skills
+  end
+
+  def calculate_matching_percentage(matching_count, total_count)
+    ((matching_count.to_f / total_count) * 100).round
   end
 end

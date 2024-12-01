@@ -7,7 +7,7 @@ RSpec.describe JobsParser do
   let(:jobs_parser) { JobsParser.new(csv_file_path) }
 
   describe '#results' do
-    let(:jobs_parser_result) { jobs_parser.results }
+    let(:jobs_parser_result) { jobs_parser.results.to_a }
 
     it 'returns an array of Job objects' do
       expect(jobs_parser_result.size).to eq(2)

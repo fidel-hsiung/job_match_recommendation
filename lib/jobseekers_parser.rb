@@ -11,12 +11,20 @@ class JobseekersParser
   end
 
   def results
-    jobseekers = []
+    parse_jobseekers_from_csv
+  end
+
+  private
+
+  def parse_jobseekers_from_csv
+    return enum_for(:parse_jobseekers_from_csv) unless block_given?
 
     CSV.foreach(jobseekers_csv_file, headers: true) do |row|
-      jobseekers << Jobseeker.new(id: row['id'], name: row['name'], skills: row['skills'])
+      yield build_jobseeker(row)
     end
+  end
 
-    jobseekers
+  def build_jobseeker(row)
+    Jobseeker.new(id: row['id'], name: row['name'], skills: row['skills'])
   end
 end
