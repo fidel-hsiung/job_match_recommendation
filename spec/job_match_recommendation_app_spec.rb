@@ -11,17 +11,13 @@ RSpec.describe JobMatchRecommendationApp do
     describe '#set_csv_paths' do
       context 'when no argvs passed' do
         it 'uses default csvs' do
-          app = JobMatchRecommendationApp.new
-
           expect(app.jobseekers_csv_path).to eq JobMatchRecommendationApp::DEFAULT_JOBSEEKERS_CSV
           expect(app.jobs_csv_path).to eq JobMatchRecommendationApp::DEFAULT_JOBS_CSV
         end
       end
 
       context 'when valid CSV file paths are provided' do
-
         it 'uses default csvs' do
-          app = JobMatchRecommendationApp.new
           app.instance_variable_set(:@options, { jobseekers_csv: jobseekers_csv, jobs_csv: jobs_csv })
           app.send(:set_csv_paths)
 
@@ -43,7 +39,7 @@ RSpec.describe JobMatchRecommendationApp do
 
       context 'when paths are invalid' do
         let(:invalid_jobseekrs_csv) { 'spec/fixtures/nonexist_jobseekers.csv' }
-        let(:invalid_jobs_csv) { 'spec/fixtures/nonexist_jobs.csv' }
+        let(:invalid_jobs_csv) { 'spec/fixtures/jobs' }
 
         it 'adds errors for invalid csvs' do
           app.instance_variable_set(:@options, { jobseekers_csv: invalid_jobseekrs_csv, jobs_csv: invalid_jobs_csv })
@@ -51,7 +47,7 @@ RSpec.describe JobMatchRecommendationApp do
           app.send(:validate_csv_paths)
 
           expect(app.errors).to eq [
-            "#{invalid_jobseekrs_csv} does not exist or is not a valid file", "#{invalid_jobs_csv} does not exist or is not a valid file"
+            "#{invalid_jobseekrs_csv} does not exist or is not a valid csv", "#{invalid_jobs_csv} does not exist or is not a valid csv"
           ]
         end
       end

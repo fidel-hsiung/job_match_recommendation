@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-require 'pry'
 require_relative 'job_match_recommendation'
 require 'optparse'
 require 'fileutils'
@@ -67,9 +66,9 @@ class JobMatchRecommendationApp
   end
 
   def validate_csv(csv_path)
-    return if File.file?(csv_path)
+    return if File.file?(csv_path) && csv_path.end_with?('.csv')
 
-    errors << "#{csv_path} does not exist or is not a valid file"
+    errors << "#{csv_path} does not exist or is not a valid csv"
   end
 
   def output_results(job_recommendations)
