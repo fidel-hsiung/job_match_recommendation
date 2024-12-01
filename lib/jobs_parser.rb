@@ -22,6 +22,8 @@ class JobsParser
     CSV.foreach(jobs_csv_file, headers: true) do |row|
       yield build_job(row)
     end
+  rescue StandardError => e
+    puts "Error while parsing the jobs CSV file(#{jobs_csv_file}): #{e.message}"
   end
 
   def build_job(row)
