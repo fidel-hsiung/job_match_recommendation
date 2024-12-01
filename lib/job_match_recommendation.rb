@@ -11,16 +11,9 @@ class JobMatchRecommendation
   end
 
   def results
-    recommendations = []
-
-    jobseekers.each do |jobseeker|
-      jobs.each do |job|
-        recommendation = build_recommendation(jobseeker, job)
-        recommendations << recommendation if recommendation
-      end
-    end
-
-    recommendations.sort_by { |recommendation| sort_keys(recommendation) }
+    jobseekers.flat_map do |jobseeker|
+      jobs.map { |job| build_recommendation(jobseeker, job) }.compact
+    end.sort_by { |recommendation| sorting_criteria(recommendation) }
   end
 
   def jobseekers
@@ -45,7 +38,7 @@ class JobMatchRecommendation
     }
   end
 
-  def sort_keys(recommendation)
+  def sorting_criteria(recommendation)
     [recommendation[:jobseeker_id], -recommendation[:matching_skill_percent], recommendation[:job_id]]
   end
 end
