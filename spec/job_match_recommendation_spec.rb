@@ -40,7 +40,7 @@ RSpec.describe JobMatchRecommendation do
         [
           {
             jobseeker_id: 1,
-            jobseeker_name: 'Alice Seeker',
+            jobseeker_name: 'Alice',
             job_id: 1,
             job_title: 'Ruby Developer',
             matching_skill_count: 3,
@@ -48,7 +48,7 @@ RSpec.describe JobMatchRecommendation do
           },
           {
             jobseeker_id: 1,
-            jobseeker_name: 'Alice Seeker',
+            jobseeker_name: 'Alice',
             job_id: 3,
             job_title: 'Backend Developer',
             matching_skill_count: 2,
@@ -56,7 +56,7 @@ RSpec.describe JobMatchRecommendation do
           },
           {
             jobseeker_id: 1,
-            jobseeker_name: 'Alice Seeker',
+            jobseeker_name: 'Alice',
             job_id: 4,
             job_title: 'Web Developer',
             matching_skill_count: 1,
@@ -64,7 +64,7 @@ RSpec.describe JobMatchRecommendation do
           },
           {
             jobseeker_id: 2,
-            jobseeker_name: 'Bob Applicant',
+            jobseeker_name: 'Bob',
             job_id: 2,
             job_title: 'Frontend Developer',
             matching_skill_count: 3,
@@ -72,7 +72,7 @@ RSpec.describe JobMatchRecommendation do
           },
           {
             jobseeker_id: 2,
-            jobseeker_name: 'Bob Applicant',
+            jobseeker_name: 'Bob',
             job_id: 4,
             job_title: 'Web Developer',
             matching_skill_count: 3,
@@ -80,7 +80,7 @@ RSpec.describe JobMatchRecommendation do
           },
           {
             jobseeker_id: 3,
-            jobseeker_name: 'Charlie Jobhunter',
+            jobseeker_name: 'Charlie',
             job_id: 3,
             job_title: 'Backend Developer',
             matching_skill_count: 3,
@@ -88,7 +88,7 @@ RSpec.describe JobMatchRecommendation do
           },
           {
             jobseeker_id: 3,
-            jobseeker_name: 'Charlie Jobhunter',
+            jobseeker_name: 'Charlie',
             job_id: 1,
             job_title: 'Ruby Developer',
             matching_skill_count: 2,

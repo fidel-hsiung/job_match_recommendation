@@ -76,7 +76,7 @@ RSpec.describe JobMatchRecommendationApp do
           instance_double(JobMatchRecommendation, results: [
             {
               jobseeker_id: 1,
-              jobseeker_name: 'Alice Seeker',
+              jobseeker_name: 'Alice',
               job_id: 1,
               job_title: 'Ruby Developer',
               matching_skill_count: 3,
@@ -91,7 +91,7 @@ RSpec.describe JobMatchRecommendationApp do
           expect(app).to have_received(:log).with('Job recommendations generated successfully.')
           expect(app).to have_received(:puts).with("\n\nJob Recommendations")
           expect(app).to have_received(:puts).with('jobseeker_id, jobseeker_name, job_id, job_title, matching_skill_count, matching_skill_percent')
-          expect(app).to have_received(:puts).with('1, Alice Seeker, 1, Ruby Developer, 3, 100')
+          expect(app).to have_received(:puts).with('1, Alice, 1, Ruby Developer, 3, 100')
         end
 
         context 'when there are no recommendations' do

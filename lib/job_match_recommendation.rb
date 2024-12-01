@@ -34,7 +34,7 @@ class JobMatchRecommendation
 
     {
       jobseeker_id: jobseeker.id,
-      jobseeker_name: jobseeker.name,
+      jobseeker_name: jobseeker.display_name,
       job_id: job.id,
       job_title: job.title,
       matching_skill_count: job_skill_match_evaluate_results[:matching_count],

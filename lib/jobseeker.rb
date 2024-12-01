@@ -17,6 +17,10 @@ class Jobseeker
     validate_attributes
   end
 
+  def display_name
+    name.split(' ').first.strip
+  end
+
   private
 
   def validate_attributes
