@@ -2,8 +2,11 @@
 
 require 'csv'
 require_relative 'job'
+require_relative 'shared/logger'
 
 class JobsParser
+  include Shared::Logger
+
   attr_reader :jobs_csv_file
 
   def initialize(jobs_csv_file)
@@ -23,7 +26,7 @@ class JobsParser
       yield build_job(row)
     end
   rescue StandardError => e
-    puts "Error while parsing the jobs CSV file(#{jobs_csv_file}): #{e.message}"
+    log_error "Error while parsing the jobs CSV file(#{jobs_csv_file}): #{e.message}"
   end
 
   def build_job(row)

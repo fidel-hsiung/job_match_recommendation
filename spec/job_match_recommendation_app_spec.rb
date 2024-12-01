@@ -68,6 +68,7 @@ RSpec.describe JobMatchRecommendationApp do
         before do
           allow(JobMatchRecommendation).to receive(:new).and_return(job_match_recommendation)
 
+          allow(app).to receive(:log)
           allow(app).to receive(:puts)
         end
 
@@ -87,7 +88,8 @@ RSpec.describe JobMatchRecommendationApp do
         it 'outputs job recommendations' do
           app.run
 
-          expect(app).to have_received(:puts).with('Job recommendations generated successfully.')
+          expect(app).to have_received(:log).with('Job recommendations generated successfully.')
+          expect(app).to have_received(:puts).with("\n\nJob Recommendations")
           expect(app).to have_received(:puts).with('jobseeker_id, jobseeker_name, job_id, job_title, matching_skill_count, matching_skill_percent')
           expect(app).to have_received(:puts).with('1, Alice Seeker, 1, Ruby Developer, 3, 100')
         end
@@ -98,7 +100,7 @@ RSpec.describe JobMatchRecommendationApp do
           it 'outputs job recommendations' do
             app.run
 
-            expect(app).to have_received(:puts).with('No job recommendations found.')
+            expect(app).to have_received(:log).with('No job recommendations found.')
           end
         end
       end

@@ -44,11 +44,11 @@ RSpec.describe JobseekersParser do
       let(:csv_file_path) { 'spec/fixtures/nonexistent_jobseekers.csv' }
 
       it 'raises an error' do
-        allow(jobseekers_parser).to receive(:puts)
+        allow(jobseekers_parser).to receive(:log_error)
 
         jobseekers_parser_result_array
 
-        expect(jobseekers_parser).to have_received(:puts).with(
+        expect(jobseekers_parser).to have_received(:log_error).with(
           a_string_including("Error while parsing the jobseekers CSV file(#{csv_file_path}):")
         )
       end

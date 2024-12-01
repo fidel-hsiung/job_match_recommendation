@@ -1,10 +1,13 @@
 # frozen_string_literal: true
 
-require_relative 'job_match_recommendation'
 require 'optparse'
 require 'fileutils'
+require_relative 'shared/logger'
+require_relative 'job_match_recommendation'
 
 class JobMatchRecommendationApp
+  include Shared::Logger
+
   DEFAULT_JOBSEEKERS_CSV = 'data/jobseekers.csv'.freeze
   DEFAULT_JOBS_CSV = 'data/jobs.csv'.freeze
 
@@ -20,8 +23,7 @@ class JobMatchRecommendationApp
 
   def run
     if errors.any?
-      puts "Error:"
-      puts "#{@errors.join(', ')}."
+      log_error "#{@errors.join(', ')}."
       exit 1
     end
 
@@ -56,8 +58,8 @@ class JobMatchRecommendationApp
     @jobseekers_csv_path = @options[:jobseekers_csv] || DEFAULT_JOBSEEKERS_CSV
     @jobs_csv_path = @options[:jobs_csv] || DEFAULT_JOBS_CSV
 
-    puts 'No jobseekers csv provided, using default jobseekers csv.' unless @options[:jobseekers_csv]
-    puts 'No jobs csv provided, using default jobs csv.' unless @options[:jobs_csv]
+    log('No jobseekers csv provided, using default jobseekers csv.') unless @options[:jobseekers_csv]
+    log('No jobs csv provided, using default jobs csv.') unless @options[:jobs_csv]
   end
 
   def validate_csv_paths
@@ -73,14 +75,15 @@ class JobMatchRecommendationApp
 
   def output_results(job_recommendations)
     if job_recommendations.empty?
-      puts 'No job recommendations found.'
+      log('No job recommendations found.')
     else
-      puts 'Job recommendations generated successfully.'
+      log('Job recommendations generated successfully.')
       display_job_recommendations(job_recommendations)
     end
   end
 
   def display_job_recommendations(job_recommendations)
+    puts "\n\nJob Recommendations"
     puts 'jobseeker_id, jobseeker_name, job_id, job_title, matching_skill_count, matching_skill_percent'
 
     job_recommendations.each do |recommendation|
