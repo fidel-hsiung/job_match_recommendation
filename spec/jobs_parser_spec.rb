@@ -16,7 +16,7 @@ RSpec.describe JobsParser do
       jobs = jobs_parser_result.take(1)
       expect(jobs.size).to eq(1)
       expect(jobs.first.id).to eq(1)
-      expect(jobs.first.title).to eq('')
+      expect(jobs.first.title).to eq('Ruby Developer')
       expect(jobs.first.required_skills).to eq(['Ruby', 'SQL', 'Problem Solving'])
     end
 
@@ -24,15 +24,15 @@ RSpec.describe JobsParser do
       expect(jobs_parser_result_array.size).to eq(2)
       expect(jobs_parser_result_array.first).to be_a(Job)
       expect(jobs_parser_result_array.first.id).to eq(1)
-      expect(jobs_parser_result_array.first.title).to eq('')
+      expect(jobs_parser_result_array.first.title).to eq('Ruby Developer')
       expect(jobs_parser_result_array.first.required_skills).to eq(['Ruby', 'SQL', 'Problem Solving'])
       expect(jobs_parser_result_array.last).to be_a(Job)
-      expect(jobs_parser_result_array.last.id).to eq(0)
+      expect(jobs_parser_result_array.last.id).to eq(2)
       expect(jobs_parser_result_array.last.title).to eq('Frontend Developer')
-      expect(jobs_parser_result_array.last.required_skills).to eq([])
+      expect(jobs_parser_result_array.last.required_skills).to eq(['JavaScript', 'HTML/CSS', 'React', 'Teamwork'])
     end
 
-    context 'when csv file is empty' do
+    context 'when the csv file is empty' do
       let(:csv_file_path) { 'spec/fixtures/empty_jobs.csv' }
 
       it 'returns empty array' do
@@ -41,6 +41,25 @@ RSpec.describe JobsParser do
     end
 
     context 'when the csv file is invalid' do
+      let(:csv_file_path) { 'spec/fixtures/invalid_jobs.csv' }
+
+      it 'raises an error and skips the invalid row' do
+        allow(jobs_parser).to receive(:log_error)
+
+        jobs_parser_result_array
+
+        expect(jobs_parser).to have_received(:log_error).with(
+          a_string_including("Error while building the job with row(2,,\"JavaScript, HTML/CSS, React, Teamwork\"\n):")
+        )
+
+        expect(jobs_parser_result_array.size).to eq(2)
+        expect(jobs_parser_result_array.first).to be_a(Job)
+        expect(jobs_parser_result_array.first.id).to eq(1)
+        expect(jobs_parser_result_array.last).to be_nil
+      end
+    end
+
+    context 'when the csv file is not exists' do
       let(:csv_file_path) { 'spec/fixtures/nonexistent_jobs.csv' }
 
       it 'raises an error' do

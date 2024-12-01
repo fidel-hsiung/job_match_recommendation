@@ -30,6 +30,10 @@ class JobseekersParser
   end
 
   def build_jobseeker(row)
-    Jobseeker.new(id: row['id'], name: row['name'], skills: row['skills'])
+    begin
+      Jobseeker.new(id: row['id'], name: row['name'], skills: row['skills'])
+    rescue ArgumentError => e
+      log_error "Error while building the jobseekers with row(#{row}): #{e.message}"
+    end
   end
 end

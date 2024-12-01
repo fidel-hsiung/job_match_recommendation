@@ -9,7 +9,9 @@ RSpec.describe JobMatchRecommendation do
   let(:jobseekers) do
     [
       Jobseeker.new(id: 1, name: 'Alice Seeker', skills: 'Ruby, SQL, Problem Solving'),
+      nil,
       Jobseeker.new(id: 2, name: 'Bob Applicant', skills: 'JavaScript, HTML/CSS, Teamwork'),
+      '',
       Jobseeker.new(id: 3, name: 'Charlie Jobhunter', skills: 'Java, SQL, Problem Solving')
     ]
   end
@@ -17,6 +19,8 @@ RSpec.describe JobMatchRecommendation do
     [
       Job.new(id: 1, title: 'Ruby Developer', required_skills: 'Ruby, SQL, Problem Solving'),
       Job.new(id: 2, title: 'Frontend Developer', required_skills: 'JavaScript, HTML/CSS, React, Teamwork'),
+      nil,
+      '',
       Job.new(id: 3, title: 'Backend Developer', required_skills: 'Java, SQL, Node.js, Problem Solving'),
       Job.new(id: 4, title: 'Web Developer', required_skills: 'HTML/CSS, JavaScript, Ruby, Teamwork')
     ]
@@ -93,7 +97,7 @@ RSpec.describe JobMatchRecommendation do
         ]
       end
 
-      it 'lists the recommendations in expected sorting' do
+      it 'skips the empty jobseeker/job and lists the recommendations in expected sorting' do
         expect(recommendation_result).to eq(expected_recommendations)
       end
     end

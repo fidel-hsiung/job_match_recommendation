@@ -24,9 +24,13 @@ class JobMatchRecommendation
     @jobs ||= JobsParser.new(@jobs_file).results
   end
 
+  private
+
   def build_recommendation(jobseeker, job)
+    return unless jobseeker.is_a?(Jobseeker) && job.is_a?(Job)
+
     job_skill_match_evaluate_results = JobSkillMatchEvaluator.new(jobseeker: jobseeker, job: job).results
-    return nil if job_skill_match_evaluate_results[:matching_count].zero?
+    return if job_skill_match_evaluate_results[:matching_count].zero?
 
     {
       jobseeker_id: jobseeker.id,
